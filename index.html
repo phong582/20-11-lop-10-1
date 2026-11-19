@@ -164,7 +164,13 @@ musicToggle.addEventListener('click',async()=>{if(!playing){try{await audio.play
 const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('show');revealObserver.unobserve(entry.target)}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
 const lightbox=document.getElementById('lightbox'),largeImg=document.getElementById('largeImg');
-document.querySelectorAll('.photo').forEach(photo=>photo.addEventListener('click',()=>{largeImg.src=photo.dataset.full;lightbox.classList.add('open');document.body.style.overflow='hidden'}));
+document.querySelectorAll('.photo:not(.memory-photo)').forEach(photo=>{
+  photo.addEventListener('click',()=>{
+    largeImg.src=photo.dataset.full;
+    lightbox.classList.add('open');
+    document.body.style.overflow='hidden';
+  });
+});
 function closeBox(){lightbox.classList.remove('open');largeImg.src='';document.body.style.overflow=''}
 document.getElementById('closeLightbox').addEventListener('click',closeBox);lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeBox()});document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeBox();letterModal.classList.remove('open');document.body.style.overflow=''}});
 
