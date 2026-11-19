@@ -1,4 +1,4 @@
-from pathlib import Path
+
 
 html = r'''<!doctype html>
 <html lang="vi">
@@ -190,6 +190,3 @@ renderGame();
 </script>
 </body></html>'''
 
-path = Path("/mnt/data/website-20-11-cute-pro-game.html")
-path.write_text(html, encoding="utf-8")
-print(f"Đã tạo website: {path.name} ({path.stat().st_size:,} bytes)")
