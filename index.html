@@ -1,6 +1,6 @@
 
 
-html = r'''<!doctype html>
+<!doctype html>
 <html lang="vi">
 <head>
 <meta charset="utf-8">
@@ -188,5 +188,5 @@ document.getElementById('restart').addEventListener('click',renderGame);
 document.getElementById('peek').addEventListener('click',()=>{if(lock||pairs===6)return;lock=true;const tiles=[...grid.children].filter(t=>!t.classList.contains('matched'));tiles.forEach(t=>t.classList.add('flipped'));messageEl.textContent='Hãy ghi nhớ thật nhanh nhé! 👀';clearTimeout(peekTimeout);peekTimeout=setTimeout(()=>{tiles.forEach(t=>{if(!t.classList.contains('matched'))t.classList.remove('flipped')});lock=false;messageEl.textContent='Đến lượt bạn ghép cặp!'},1100)});
 renderGame();
 </script>
-</body></html>'''
+</body></html>
 
