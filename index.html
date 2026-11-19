@@ -118,7 +118,12 @@ footer{padding:30px 0;color:#998ba0;font-size:.8rem}.foot{display:flex;justify-c
 <section class="content wrap reveal" id="moments">
 <div class="heading"><div class="eyebrow">Our little memories</div><h2>Thanh xuân dưới mái trường</h2><p>Những khoảnh khắc thân quen được lưu giữ bằng nụ cười, tình bạn và lòng biết ơn.</p></div>
 <div class="gallery">
-<button class="photo" data-full="https://raw.githubusercontent.com/phong582/20-11-lop-10-1/main/images/IMG_20261118_100727.jpg"><img loading="lazy" src="https://raw.githubusercontent.com/phong582/20-11-lop-10-1/main/images/IMG_20261118_100727.jpg" alt="Khoảnh khắc lớp học 1"><span class="caption">Những ngày đáng nhớ ♡</span></button>
+<button class="photo memory-photo" id="firstMemoryPhoto">
+  <img loading="lazy"
+  src="images/IMG_20261118_100727.jpg"
+  alt="Kỷ niệm chia tay đầu tiên với lớp">
+  <span class="caption">Kỷ niệm đầu tiên với lớp ♡</span>
+</button>
 <button class="photo" data-full="https://raw.githubusercontent.com/phong582/20-11-lop-10-1/main/images/IMG_20261118_100655.jpg"><img loading="lazy" src="https://raw.githubusercontent.com/phong582/20-11-lop-10-1/main/images/IMG_20261118_100655.jpg" alt="Khoảnh khắc lớp học 2"><span class="caption">Cùng nhau trưởng thành</span></button>
 <button class="photo" data-full="https://raw.githubusercontent.com/phong582/20-11-lop-10-1/main/images/IMG_20261118_100647.jpg"><img loading="lazy" src="https://raw.githubusercontent.com/phong582/20-11-lop-10-1/main/images/IMG_20261118_100647.jpg" alt="Khoảnh khắc lớp học 3"><span class="caption">Một thời để nhớ ✿</span></button>
 </div>
@@ -201,5 +206,42 @@ document.getElementById('openSecret').addEventListener('click',()=>{document.get
 
 document.getElementById('peek').addEventListener('click',()=>{if(lock||pairs===6)return;lock=true;const tiles=[...grid.children].filter(t=>!t.classList.contains('matched'));tiles.forEach(t=>t.classList.add('flipped'));messageEl.textContent='Hãy ghi nhớ thật nhanh nhé! 👀';clearTimeout(peekTimeout);peekTimeout=setTimeout(()=>{tiles.forEach(t=>{if(!t.classList.contains('matched'))t.classList.remove('flipped')});lock=false;messageEl.textContent='Đến lượt bạn ghép cặp!'},1100)});
 renderGame();
+</script>
+   <div class="modal" id="memoryModal">
+  <div class="letter-paper">
+    <button class="modal-close" id="closeMemory">×</button>
+    <div class="paper-flower">🌷💗🌷</div>
+    <div class="eyebrow">A LITTLE MEMORY</div>
+    <h3>Một kỷ niệm thật đặc biệt</h3>
+    <p style="text-align:center;font-size:1.12rem;line-height:2">
+      Dù không được nói chuyện nhưng mà siêu siêu thích cô,
+      nên đã làm 1 bữa chia tay nho nhỏ.
+      Đánh dấu kỉ niệm đầu tiên với lớp. 💗
+    </p>
+    <div class="paper-sign">
+      Một kỷ niệm sẽ luôn được trân trọng ♡
+    </div>
+  </div>
+</div>
+
+<script>
+const memoryModal = document.getElementById('memoryModal');
+
+document.getElementById('firstMemoryPhoto').addEventListener('click', () => {
+  memoryModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+});
+
+document.getElementById('closeMemory').addEventListener('click', () => {
+  memoryModal.classList.remove('open');
+  document.body.style.overflow = '';
+});
+
+memoryModal.addEventListener('click', (e) => {
+  if (e.target === memoryModal) {
+    memoryModal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
 </script>
 </body></html>
