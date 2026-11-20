@@ -81,6 +81,26 @@ footer{padding:30px 0;color:#998ba0;font-size:.8rem}.foot{display:flex;justify-c
 @media(max-width:800px){nav{display:none}.hero{grid-template-columns:1fr;padding:45px 0 65px;gap:0}.hero-art{order:-1;min-height:410px}.cards{grid-template-columns:1fr}.card{padding:23px}.message{grid-template-columns:1fr;gap:30px}.letter-art{max-width:220px}.letter-art span{font-size:4.7rem}section.content{padding:68px 0}}
 @media(max-width:500px){.wrap{width:calc(100% - 30px)}header{height:68px}.brand{font-size:.66rem}.music{font-size:.73rem;padding:8px 11px}h1{font-size:3.35rem}.hero-art{min-height:340px}.book{width:68%}.book-flower{font-size:4rem}.book-content strong{font-size:1.9rem}.float-a{left:-3px;bottom:12%}.float-b{right:-2px;top:10%}.gallery{grid-template-columns:1fr;grid-template-rows:230px 180px 180px}.photo:first-child{grid-row:auto}.memory-grid{gap:8px}.tile{border-radius:13px;font-size:1.7rem}.game-panel{padding:17px}.foot{flex-direction:column;text-align:center}.hero p{font-size:.96rem}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+ .typed-letter {
+  color: #827487;
+  line-height: 1.9;
+  text-align: left;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  min-height: 300px;
+  margin-top: 15px;
+}
+
+.typing-cursor {
+  display: inline-block;
+  color: #d985a3;
+  font-weight: 900;
+  animation: blinkCursor .75s infinite;
+}
+
+@keyframes blinkCursor {
+  50% { opacity: 0; }
+}
 </style>
 </head>
   <body>
@@ -153,7 +173,9 @@ footer{padding:30px 0;color:#998ba0;font-size:.8rem}.foot{display:flex;justify-c
 </section>
 </main>
 
-<div class="modal" id="letterModal" role="dialog" aria-modal="true" aria-labelledby="letterTitle"><div class="letter-paper"><button class="modal-close" data-close="letterModal" aria-label="Đóng thư">×</button><div class="paper-flower">🌷💌🌷</div><div class="eyebrow">A letter from class 10/1</div><h3 id="letterTitle">Gửi những người lái đò thầm lặng</h3><p>Kính gửi thầy cô thân yêu,</p><p>Nhân ngày Nhà giáo Việt Nam 20/11, tập thể lớp 10/1 xin gửi đến thầy cô lời chúc chân thành nhất. Chúc thầy cô luôn mạnh khỏe, bình an, có thật nhiều niềm vui trong cuộc sống và luôn tìm thấy hạnh phúc trên hành trình gieo mầm tri thức.</p><p>Cảm ơn thầy cô vì những bài học, sự tận tâm và cả những lần bao dung khi chúng em còn vụng về. Có thể đôi lúc chúng em chưa ngoan, chưa hiểu hết những điều thầy cô làm, nhưng chúng em sẽ luôn ghi nhớ và trân trọng.</p><p>Mong rằng mỗi ngày đến lớp của thầy cô đều có thêm một lý do để mỉm cười. Chúng em sẽ cố gắng học tập, trưởng thành và trở thành niềm tự hào của thầy cô.</p><div class="paper-sign">Với tất cả lòng biết ơn,<br>Tập thể lớp 10/1 ♡</div><button class="paper-action" data-close="letterModal">Gấp thư lại ♡</button></div></div>
+<div class="modal" id="letterModal" role="dialog" aria-modal="true" aria-labelledby="letterTitle"><div class="letter-paper"><button class="modal-close" data-close="letterModal" aria-label="Đóng thư">×</button><div class="paper-flower">🌷💌🌷</div><div class="eyebrow">A letter from class 10/1</div><h3 id="letterTitle">Gửi những người lái đò thầm lặng</h3><div class="typed-letter">
+  <span id="typedContent"></span><span class="typing-cursor">|</span>
+</div><button class="paper-action" data-close="letterModal">Gấp thư lại ♡</button></div></div>
 <footer><div class="wrap foot"><div><strong>20.11 · HAPPY TEACHERS' DAY</strong></div><div>Được tạo bằng lòng biết ơn và thật nhiều yêu thương 🌷</div></div></footer>
 
 <audio id="bgMusic" loop preload="none"><source src="https://raw.githubusercontent.com/phong582/20-11-lop-10-1/main/audio/d128daf42d60b3a5fe95a78695c55f2a.mp3" type="audio/mpeg"></audio>
@@ -204,7 +226,52 @@ function celebrate(){
 document.getElementById('restart').addEventListener('click',renderGame);
 // Mo phong bi loi chuc va dong lai khi bam nut / nen toi.
 const letterModal=document.getElementById('letterModal');
-document.getElementById('openLetter').addEventListener('click',()=>{letterModal.classList.add('open');document.body.style.overflow='hidden'});
+const typedContent = document.getElementById('typedContent');
+
+const messageText = `Gửi đến: Cô Huỳnh Thị Hồng Thắm
+
+Cô Huỳnh Thị Hồng Thắm kính yêu của chúng em,
+
+Nhân ngày 20/11, tập thể 10.1 muốn gửi tới cô lời xin lỗi và lời cảm ơn từ tận đáy lòng.
+
+Chúng em biết có những lúc tuổi học trò còn vô tâm, nghịch ngợm làm cô buồn lòng, mệt mỏi. Vậy mà cô chưa từng buông tay, vẫn lặng lẽ thức khuya bên trang giáo án, lấy sự bao dung để sưởi ấm và nâng bước chúng em qua từng bài học khó. Với 10.1, cô không chỉ là người truyền lửa môn Vật lí, mà còn là người mẹ thứ hai dịu dàng dạy chúng em cách làm người.
+
+Kính chúc cô luôn mạnh khỏe, bình an để mãi rạng rỡ trên bục giảng. Tập thể 10.1 yêu cô!!!
+
+Từ: Tập thể lớp 10.1`;
+
+let charIndex = 0;
+let typingTimer = null;
+
+function typeMessage() {
+  if (charIndex >= messageText.length) {
+    clearTimeout(typingTimer);
+    return;
+  }
+
+  const char = messageText.charAt(charIndex);
+  typedContent.textContent += char;
+  charIndex++;
+
+  let delay = 35;
+
+  if (char === ',' || char === ';') delay = 220;
+  if (char === '.' || char === '!' || char === '?') delay = 420;
+  if (char === '\n') delay = 300;
+
+  typingTimer = setTimeout(typeMessage, delay);
+}
+
+document.getElementById('openLetter').addEventListener('click', () => {
+  letterModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  clearTimeout(typingTimer);
+  charIndex = 0;
+  typedContent.textContent = '';
+
+  setTimeout(typeMessage, 700);
+});
 document.querySelectorAll('[data-close]').forEach(btn=>btn.addEventListener('click',()=>{document.getElementById(btn.dataset.close).classList.remove('open');document.body.style.overflow=''}));
 [letterModal].forEach(modal=>modal.addEventListener('click',e=>{if(e.target===modal){modal.classList.remove('open');document.body.style.overflow=''}}));
 // Qua tang chi duoc mo khoa sau khi ghep du 6 cap.
