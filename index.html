@@ -101,9 +101,116 @@ footer{padding:30px 0;color:#998ba0;font-size:.8rem}.foot{display:flex;justify-c
 @keyframes blinkCursor {
   50% { opacity: 0; }
 }
+ /* Màn hình nhập mật khẩu */
+.password-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background:
+    radial-gradient(circle at 10% 10%, #ffe2e8, transparent 35%),
+    radial-gradient(circle at 90% 90%, #e8e0ff, transparent 35%),
+    #fff9f4;
+}
+
+.password-card {
+  width: min(420px, 100%);
+  padding: 38px 28px;
+  text-align: center;
+  background: #ffffffdf;
+  border: 1px solid #f0dce7;
+  border-radius: 28px;
+  box-shadow: 0 20px 60px #b99eb044;
+}
+
+.password-flower {
+  font-size: 3.5rem;
+  margin-bottom: 10px;
+}
+
+.password-card h2 {
+  font-size: 2rem;
+  margin: 10px 0;
+}
+
+.password-card p {
+  color: #807487;
+  font-size: .95rem;
+}
+
+.password-input {
+  width: 100%;
+  padding: 14px;
+  margin: 15px 0 12px;
+  border: 1px solid #ead3df;
+  border-radius: 14px;
+  outline: none;
+  background: #fff9f7;
+  color: #493d50;
+  font: inherit;
+  text-align: center;
+}
+
+.password-input:focus {
+  border-color: #d985a3;
+  box-shadow: 0 0 0 3px #f9dce6;
+}
+
+.password-error {
+  color: #d46e8c !important;
+  min-height: 25px;
+  font-weight: 800;
+}
+
+.password-button {
+  width: 100%;
+  padding: 13px;
+  border: 0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ed9fb5, #d6b9eb);
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+}
 </style>
 </head>
   <body>
+   <div class="password-screen" id="passwordScreen">
+  <div class="password-card">
+    <div class="password-flower">🌷💌🌷</div>
+
+    <div class="eyebrow">A LITTLE SECRET</div>
+
+    <h2>Chào mừng bạn ♡</h2>
+
+    <p>
+      Một món quà nhỏ đang chờ bạn khám phá.
+      Hãy nhập mật khẩu để mở nhé!
+    </p>
+
+    <form id="passwordForm">
+      <input
+        class="password-input"
+        id="passwordInput"
+        type="password"
+        placeholder="Nhập mật khẩu..."
+        autocomplete="off"
+        required
+      >
+
+      <p class="password-error" id="passwordError"></p>
+
+      <button class="password-button" type="submit">
+        Mở cánh cửa yêu thương ♡
+      </button>
+    </form>
+
+    <p>✿ Made with love · 20.11 ✿</p>
+  </div>
+   </div>
 <header class="wrap">
 <a class="brand" href="#top"><span class="brand-icon">🌷</span><span>20 THÁNG 11 <span style="color:#d99ab2">✦</span> TRI ÂN THẦY CÔ</span></a>
 <nav><a href="#meaning">Ý nghĩa</a><a href="#moments">Kỷ niệm</a><a href="#game">Trò chơi</a><a href="#message">Lời chúc</a></nav>
@@ -183,6 +290,22 @@ footer{padding:30px 0;color:#998ba0;font-size:.8rem}.foot{display:flex;justify-c
 </audio>
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Xem ảnh lớn"><button class="close" id="closeLightbox" aria-label="Đóng">×</button><img id="largeImg" alt="Ảnh phóng to"></div>
     <script>
+     const passwordForm = document.getElementById('passwordForm');
+const passwordInput = document.getElementById('passwordInput');
+const passwordScreen = document.getElementById('passwordScreen');
+const passwordError = document.getElementById('passwordError');
+
+passwordForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  if (passwordInput.value === '101loveyou') {
+    passwordScreen.style.display = 'none';
+  } else {
+    passwordError.textContent = 'Mật khẩu chưa đúng, thử lại nhé! ♡';
+    passwordInput.value = '';
+    passwordInput.focus();
+  }
+});
 const audio=document.getElementById('bgMusic'),musicToggle=document.getElementById('musicToggle'),musicLabel=document.getElementById('musicLabel');let playing=false;
 musicToggle.addEventListener('click',async()=>{if(!playing){try{await audio.play();playing=true;musicLabel.textContent='Tắt nhạc'}catch(e){musicLabel.textContent='Thử lại'}}else{audio.pause();playing=false;musicLabel.textContent='Bật nhạc'}});
 const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('show');revealObserver.unobserve(entry.target)}}),{threshold:.12});
